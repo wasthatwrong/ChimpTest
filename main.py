@@ -10,6 +10,7 @@ NUM_SQUARES = 9
 WIDTH = 8
 HEIGHT = 5
 SCREEN_WIDTH, SCREEN_HEIGHT = 960, 540
+best_time = None
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN, display=0)
 
@@ -18,6 +19,7 @@ game_is_over = False
 def game_over():
     screen.fill((0, 0, 0))
     screen.blit(text, text_rect)
+    screen.blit(best_time_text, best_time_text_rect)
     pygame.display.flip()
     time.sleep(0.2)
     global game_is_over
@@ -45,6 +47,11 @@ text_rect = text.get_rect()
 text_rect.bottomleft = (5, SCREEN_HEIGHT-5)
 screen.blit(text, text_rect)
 
+best_time_text = font.render("Best time: ", True, (255, 255, 255))
+best_time_text_rect = text.get_rect()
+best_time_text_rect.topleft = (5, 5)
+screen.blit(best_time_text, best_time_text_rect)
+
 run = True
 while run:
     current_num = 1
@@ -56,7 +63,9 @@ while run:
     screen.fill((0, 0, 0))
 
     squares.draw(screen)
+    start = time.perf_counter()
     screen.blit(text, text_rect)
+    screen.blit(best_time_text, best_time_text_rect)
     pygame.display.flip()
 
     while not hasClicked and run:
@@ -73,15 +82,14 @@ while run:
                     if square.rect.collidepoint(event.pos):
                         hasClicked = True
                         if square.num != current_num:
-                                print("fail")
                                 game_over()
                                 break
                         else:
+
                             for sprite in squares:
                                 sprite.hide_number()
                             square.on_click()
                             current_num += 1
-                            print("success")
                             break
 
 
@@ -106,6 +114,11 @@ while run:
                             break
 
                         if current_num == NUM_SQUARES:
+                            elapsed = time.perf_counter() - start
+                            if best_time is None or elapsed < best_time:
+                                best_time = elapsed
+                                best_time_text = font.render(f"Best time: {best_time:.3f}", True, (255, 255, 255))
+                            print(elapsed)
                             print("win")
                             game_over()
                             break
@@ -119,6 +132,7 @@ while run:
 
         squares.draw(screen)
         screen.blit(text, text_rect)
+        screen.blit(best_time_text, best_time_text_rect)
         pygame.display.flip()
 
 pygame.quit()

@@ -27,7 +27,6 @@ class Square(pygame.sprite.Sprite):
     def on_click(self):
         self.image.fill(pygame.Color('black'))
         self.clicked = True
-        print("clicked")
 
     def hide_number(self):
         self.image.fill(pygame.Color('white'))
