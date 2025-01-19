@@ -17,6 +17,7 @@ game_is_over = False
 
 def game_over():
     screen.fill((0, 0, 0))
+    screen.blit(text, text_rect)
     pygame.display.flip()
     time.sleep(0.2)
     global game_is_over
@@ -38,6 +39,12 @@ def generate_squares():
         sprite_list.add(Square(x, y, i))
     return sprite_list
 
+font = pygame.font.SysFont(None, 30)
+text = font.render("ESC to quit", True, (255, 255, 255))
+text_rect = text.get_rect()
+text_rect.bottomleft = (5, SCREEN_HEIGHT-5)
+screen.blit(text, text_rect)
+
 run = True
 while run:
     current_num = 1
@@ -49,7 +56,7 @@ while run:
     screen.fill((0, 0, 0))
 
     squares.draw(screen)
-
+    screen.blit(text, text_rect)
     pygame.display.flip()
 
     while not hasClicked and run:
@@ -59,6 +66,8 @@ while run:
             if event.type == pygame.QUIT:
                 run = False
 
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                run = False
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for square in squares:
                     if square.rect.collidepoint(event.pos):
@@ -81,6 +90,9 @@ while run:
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                run = False
+
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 run = False
 
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -106,7 +118,7 @@ while run:
         screen.fill((0, 0, 0))
 
         squares.draw(screen)
-
+        screen.blit(text, text_rect)
         pygame.display.flip()
 
 pygame.quit()
