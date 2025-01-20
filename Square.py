@@ -13,7 +13,6 @@ class Square(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = pygame.Surface((Square.SQUARE_SIZE, Square.SQUARE_SIZE))
-        #self.image.fill(pygame.Color('white'))
         self.rect = self.image.get_rect()
 
         self.set_coordinates(x, y)

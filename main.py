@@ -67,7 +67,26 @@ curr_time_text_rect = text.get_rect()
 curr_time_text_rect.topleft = (5, 25)
 screen.blit(curr_time_text, curr_time_text_rect)
 
+start_button = pygame.Rect((0, 0, 200, 50))
+start_button.center = (SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)
+start_text = font.render("Start", True, (0, 0, 0))
+start_text_rect = start_text.get_rect()
+start_text_rect.center = start_button.center
+pygame.draw.rect(screen, (255, 255, 255), start_button)
+screen.blit(start_text, start_text_rect)
+pygame.display.flip()
+
 run = True
+ready = False
+while run and not ready:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            run = False
+        if event.type == pygame.MOUSEBUTTONDOWN and start_button.collidepoint(event.pos):
+            ready = True
+
 while run:
     current_num = 1
     hasClicked = False
