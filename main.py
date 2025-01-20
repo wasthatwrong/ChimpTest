@@ -27,15 +27,10 @@ def draw():
     pygame.display.flip()
 
 def game_over():
-    screen.fill((0, 0, 0))
+    for square in squares:
+        square.on_click()
 
-    curr_time_text = font.render(f"Time: {elapsed_time:.3f}", True, (255, 255, 255))
-
-    screen.blit(text, text_rect)
-    screen.blit(best_time_text, best_time_text_rect)
-    screen.blit(curr_time_text, curr_time_text_rect)
-
-    pygame.display.flip()
+    draw()
     time.sleep(0.2)
     global game_is_over
     game_is_over = True
