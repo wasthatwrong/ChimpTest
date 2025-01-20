@@ -4,7 +4,7 @@ from Square import Square
 import time
 
 pygame.init()
-NUM_SQUARES = 3
+NUM_SQUARES = 9
 
 WIDTH = 8
 HEIGHT = 5
