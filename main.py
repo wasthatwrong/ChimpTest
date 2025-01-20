@@ -13,7 +13,7 @@ SCREEN_WIDTH, SCREEN_HEIGHT = 960, 540
 best_time = None
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), display=0)
-fullscreen = False
+
 game_is_over = False
 
 def draw():
