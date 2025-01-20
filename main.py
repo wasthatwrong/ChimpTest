@@ -22,7 +22,6 @@ def draw():
     screen.blit(text, text_rect)
     screen.blit(best_time_text, best_time_text_rect)
 
-    elapsed_time = time.perf_counter() - start
     curr_time_text = font.render(f"Time: {elapsed_time:.3f}", True, (255, 255, 255))
     screen.blit(curr_time_text, curr_time_text_rect)
 
@@ -30,10 +29,13 @@ def draw():
 
 def game_over():
     screen.fill((0, 0, 0))
+
+    curr_time_text = font.render(f"Time: {elapsed_time:.3f}", True, (255, 255, 255))
+
     screen.blit(text, text_rect)
     screen.blit(best_time_text, best_time_text_rect)
-    curr_time_text = font.render(f"Time: 0.000", True, (255, 255, 255))
     screen.blit(curr_time_text, curr_time_text_rect)
+
     pygame.display.flip()
     time.sleep(0.2)
     global game_is_over
@@ -78,15 +80,10 @@ while run:
     game_is_over = False
 
     squares = generate_squares()
+    elapsed_time = 0
 
-    screen.fill((0, 0, 0))
-
-    squares.draw(screen)
+    draw()
     start = time.perf_counter()
-    screen.blit(text, text_rect)
-    screen.blit(best_time_text, best_time_text_rect)
-    screen.blit(curr_time_text, curr_time_text_rect)
-    pygame.display.flip()
 
     while not hasClicked and run:
         key = pygame.key.get_pressed()
@@ -111,6 +108,7 @@ while run:
                             square.on_click()
                             current_num += 1
                             break
+        elapsed_time = time.perf_counter() - start
         draw()
 
     while hasClicked and run and not game_is_over:
@@ -147,7 +145,7 @@ while run:
                         current_num += 1
                         break
 
-
+        elapsed_time = time.perf_counter() - start
         draw()
 pygame.quit()
 
