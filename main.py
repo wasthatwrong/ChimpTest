@@ -4,7 +4,7 @@ from Square import Square
 import time
 
 pygame.init()
-
+clock = pygame.time.Clock()
 NUM_SQUARES = 9
 
 WIDTH = 8
@@ -16,10 +16,24 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREE
 
 game_is_over = False
 
+def draw():
+    screen.fill((0, 0, 0))
+    squares.draw(screen)
+    screen.blit(text, text_rect)
+    screen.blit(best_time_text, best_time_text_rect)
+
+    elapsed_time = time.perf_counter() - start
+    curr_time_text = font.render(f"Time: {elapsed_time:.3f}", True, (255, 255, 255))
+    screen.blit(curr_time_text, curr_time_text_rect)
+
+    pygame.display.flip()
+
 def game_over():
     screen.fill((0, 0, 0))
     screen.blit(text, text_rect)
     screen.blit(best_time_text, best_time_text_rect)
+    curr_time_text = font.render(f"Time: 0.000", True, (255, 255, 255))
+    screen.blit(curr_time_text, curr_time_text_rect)
     pygame.display.flip()
     time.sleep(0.2)
     global game_is_over
@@ -52,6 +66,11 @@ best_time_text_rect = text.get_rect()
 best_time_text_rect.topleft = (5, 5)
 screen.blit(best_time_text, best_time_text_rect)
 
+curr_time_text = font.render(f"Time: 0.000", True, (255, 255, 255))
+curr_time_text_rect = text.get_rect()
+curr_time_text_rect.topleft = (5, 25)
+screen.blit(curr_time_text, curr_time_text_rect)
+
 run = True
 while run:
     current_num = 1
@@ -66,6 +85,7 @@ while run:
     start = time.perf_counter()
     screen.blit(text, text_rect)
     screen.blit(best_time_text, best_time_text_rect)
+    screen.blit(curr_time_text, curr_time_text_rect)
     pygame.display.flip()
 
     while not hasClicked and run:
@@ -91,7 +111,7 @@ while run:
                             square.on_click()
                             current_num += 1
                             break
-
+        draw()
 
     while hasClicked and run and not game_is_over:
         key = pygame.key.get_pressed()
@@ -128,14 +148,7 @@ while run:
                         break
 
 
-        screen.fill((0, 0, 0))
-
-        squares.draw(screen)
-        screen.blit(text, text_rect)
-        screen.blit(best_time_text, best_time_text_rect)
-        pygame.display.flip()
-
+        draw()
 pygame.quit()
-
 
 
