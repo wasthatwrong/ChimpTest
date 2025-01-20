@@ -4,6 +4,7 @@ from Square import Square
 import time
 
 pygame.init()
+click_sound = pygame.mixer.Sound("sounds/click.mp3")
 NUM_SQUARES = 9
 
 WIDTH = 8
@@ -86,6 +87,7 @@ while run and not ready:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN and start_button.collidepoint(event.pos):
             ready = True
+            click_sound.play()
 
 while run:
     current_num = 1
@@ -110,6 +112,7 @@ while run:
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for square in squares:
                     if square.rect.collidepoint(event.pos):
+                        click_sound.play()
                         hasClicked = True
                         if square.num != current_num:
                                 game_over()
@@ -138,7 +141,7 @@ while run:
 
                 for square in squares:
                     if square.rect.collidepoint(event.pos):
-
+                        click_sound.play()
                         if square.num != current_num:
                             print("fail")
                             game_over()
