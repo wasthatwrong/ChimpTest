@@ -117,7 +117,7 @@ while run:
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for square in squares:
-                    if square.rect.collidepoint(event.pos):
+                    if square.rect.collidepoint(event.pos) and square.clicked == False:
                         click_sound.play()
                         hasClicked = True
                         if square.num != current_num:
@@ -149,7 +149,7 @@ while run:
             if event.type == pygame.MOUSEBUTTONDOWN:
 
                 for square in squares:
-                    if square.rect.collidepoint(event.pos):
+                    if square.rect.collidepoint(event.pos) and square.clicked == False:
                         click_sound.play()
                         if square.num != current_num:
                             print("fail")
