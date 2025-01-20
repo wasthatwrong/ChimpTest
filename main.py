@@ -4,7 +4,6 @@ from Square import Square
 import time
 
 pygame.init()
-clock = pygame.time.Clock()
 NUM_SQUARES = 3
 
 WIDTH = 8
