@@ -161,5 +161,6 @@ while run:
         elapsed_time = time.perf_counter() - start
         draw()
 pygame.quit()
+print(f"Best time: {best_time:.3f}")
 
 
