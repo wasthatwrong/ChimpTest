@@ -5,7 +5,7 @@ import time
 
 pygame.init()
 clock = pygame.time.Clock()
-NUM_SQUARES = 9
+NUM_SQUARES = 3
 
 WIDTH = 8
 HEIGHT = 5
@@ -136,7 +136,7 @@ while run:
                             if best_time is None or elapsed < best_time:
                                 best_time = elapsed
                                 best_time_text = font.render(f"Best time: {best_time:.3f}", True, (255, 255, 255))
-                            print(elapsed)
+                                curr_time_text = font.render(f"Time: {elapsed_time:.3f}", True, (255, 255, 255))
                             print("win")
                             game_over()
                             break
