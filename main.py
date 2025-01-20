@@ -12,8 +12,8 @@ HEIGHT = 5
 SCREEN_WIDTH, SCREEN_HEIGHT = 960, 540
 best_time = None
 
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN, display=0)
-
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), display=0)
+fullscreen = False
 game_is_over = False
 
 def draw():
@@ -83,8 +83,10 @@ while run and not ready:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            run = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
+                run = False
+
         if event.type == pygame.MOUSEBUTTONDOWN and start_button.collidepoint(event.pos):
             ready = True
             click_sound.play()
@@ -107,8 +109,12 @@ while run:
             if event.type == pygame.QUIT:
                 run = False
 
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                run = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    run = False
+                elif event.key == pygame.K_F11:
+                    pygame.display.toggle_fullscreen()
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 for square in squares:
                     if square.rect.collidepoint(event.pos):
@@ -134,8 +140,11 @@ while run:
             if event.type == pygame.QUIT:
                 run = False
 
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                run = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    run = False
+                elif event.key == pygame.K_F11:
+                    pygame.display.toggle_fullscreen()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
 
