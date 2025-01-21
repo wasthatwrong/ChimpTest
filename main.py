@@ -2,6 +2,12 @@ import pygame
 import random
 from Square import Square
 import time
+from enum import Enum
+
+class GameState(Enum):
+    MENU = 1
+    PLAYING = 2
+    GAME_OVER = 3
 
 pygame.init()
 click_sound = pygame.mixer.Sound("sounds/click.mp3")
@@ -77,9 +83,11 @@ pygame.draw.rect(screen, (255, 255, 255), start_button)
 screen.blit(start_text, start_text_rect)
 pygame.display.flip()
 
+# Run here
+game_state = GameState.MENU
+
 run = True
-ready = False
-while run and not ready:
+while run and game_state == GameState.MENU:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
@@ -88,10 +96,10 @@ while run and not ready:
                 run = False
 
         if event.type == pygame.MOUSEBUTTONDOWN and start_button.collidepoint(event.pos):
-            ready = True
+            game_state = GameState.PLAYING
             click_sound.play()
 
-while run:
+while run and game_state == GameState.PLAYING:
     current_num = 1
     hasClicked = False
     game_is_over = False
@@ -102,7 +110,7 @@ while run:
     draw()
     start = time.perf_counter()
 
-    while not hasClicked and run:
+    while not hasClicked and run and game_state == GameState.PLAYING:
         key = pygame.key.get_pressed()
 
         for event in pygame.event.get():
@@ -122,6 +130,7 @@ while run:
                         hasClicked = True
                         if square.num != current_num:
                                 game_over()
+                                game_state = GameState.GAME_OVER
                                 break
                         else:
 
@@ -133,7 +142,7 @@ while run:
         elapsed_time = time.perf_counter() - start
         draw()
 
-    while hasClicked and run and not game_is_over:
+    while hasClicked and run and game_state == GameState.PLAYING and not game_is_over:
         key = pygame.key.get_pressed()
 
         for event in pygame.event.get():
@@ -154,6 +163,7 @@ while run:
                         if square.num != current_num:
                             print("fail")
                             game_over()
+                            game_state = GameState.GAME_OVER
                             break
 
                         if current_num == NUM_SQUARES:
